@@ -18,17 +18,18 @@
 #include <SdFat.h>
 
 class Sdcard{
-  public:
-  	void begin();
-  	boolean startSDCard()
-    void writeLine();
-    String getPackage(String);
-    void dismissPackage();
-    ~Sdcard();
+public:
+	void begin();
+	boolean startSDCard()
+  void writeLine();
+  String getPackage(String);
+  void dismissPackage();
+  ~Sdcard();
 private:
 	SdFat sd;
-    SdFile logFile;
+  SdFile dataFile;
 	int sdPin;
+  char* dataFileName;
 };
 
 #endif

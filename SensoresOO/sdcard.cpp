@@ -13,47 +13,52 @@
 
 #include "sdcard.h"
 
-Sdcard::Sdcard(int sdPin) {
+Sdcard::Sdcard(int sdPin, char* fileName) {
 	sdPin = 8;
+  dataFileName = fileName;
 }
 
 Sdcard::~Sdcard() {
+  delete[] dataFileName;
 }
 
-void begin(){
-sd.begin(sdPin);
+void Sdcard::begin() {
+  //sd.begin(sdPin);
+  Serial.println("Use: sd.begin(sdPin), as in startSDCard()");
 }
 
-boolean startSDCard() {
-  boolean result = false; 
-  begin();
+boolean Sdcard::startSDCard() {
+  boolean result = true; 
   Serial.print("Initializing SD card...");
   // make sure that the default chip select pin is set to
   // output, even if you don't use it:
-  //pinMode(10, OUTPUT);
+  pinMode(sdPin, OUTPUT);
 
   // see if the card is present and can be initialized:
-  if (!sd.begin(sdPin)) {
-    Serial.println("Card failed, or not present");
-    // don't do anything more:
+  if (!sd.begin(sdPin, SPI_HALF_SPEED)) {
+    sd.initErrorHalt();
+    Serial.println("Card failed, or not present.");
     result = false;
   } 
   else {
+    if(!dataFile.open(dataFileName, logFileName, O_RDWR | O_CREAT | O_AT_END)){
+      sd.initErrorHalt();
+      Serial.println("File cannot be opened.");
+      result = false;
+    }
     Serial.println("card initialized.");
-    File dataFile = sd.open(fileName, FILE_WRITE);
-    // open the file:
   }  
   return result;
 }
 
 void Sdcard::writeLine() {
-	;
+	//;
 }
 
 String Sdcard::getPackage(String) {
-	;
+	return "";
 }
 
 void Sdcard::dismissPackage() {
-	;
+	//;
 }
