@@ -6,7 +6,7 @@
 * 
 * (C) Matías Barrera García, Ricardo Carrasco Cursach, 2014
 *
-* last modified: 16-04-14
+* last modified: 23-06-14
 * by: matybg and rccursach
 * 
 */
@@ -19,17 +19,17 @@
 
 class Sdcard{
 public:
-	void begin();
-	boolean startSDCard()
-  void writeLine();
-  String getPackage(String);
-  void dismissPackage();
+	void begin();              //included by compatibility ()
+	boolean startSDCard();
+  void writeLine();           //writes a string describing a package to file
+  String getPackage(String);  //get the first non-dismissed package string on file
+  void dismissPackage();      //mark first non-dismissed package as dismissed
   ~Sdcard();
 private:
 	SdFat sd;
   SdFile dataFile;
-	int sdPin;
-  char* dataFileName;
+	int sdPin;                  //control pin used by the shield
+  char* dataFileName;         //filename on sd card
 };
 
 #endif
