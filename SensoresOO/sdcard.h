@@ -19,6 +19,7 @@
 
 class Sdcard{
 public:
+  Sdcard(int sdPin, char* fileName);
 	void begin();              //included by compatibility ()
 	boolean startSDCard();
   void writeLine();           //writes a string describing a package to file

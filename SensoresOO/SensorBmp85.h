@@ -37,7 +37,7 @@ class SensorBmp85 : public Sensors {
     short bmp085GetTemperature(unsigned int ut);
     long bmp085GetPressure(unsigned long up);
 
-    const unsigned char OSS = 0;  // Oversampling Setting
+    unsigned char OSS;  // Oversampling Setting
 
     // Calibration values
     int ac1;
@@ -57,6 +57,6 @@ class SensorBmp85 : public Sensors {
     short temperature;
     long pressure;
     // Use these for altitude conversions
-    const float p0 = 101325;     // Pressure at sea level (Pa)
+    float p0;     // Pressure at sea level (Pa)
     float altitude;
 };

@@ -15,7 +15,8 @@
 #include <dht.h>
 
 SensorBmp85::SensorBmp85() {
-
+  this->OSS = 0;
+  this->p0 = 101325;     // Pressure at sea level (Pa)
 }
 
 SensorBmp85::~SensorBmp85() {
@@ -41,7 +42,7 @@ int SensorBmp85::getReqSerialSpeed() {
 
 //------
 
-void bmp085Calibration()
+void SensorBmp85::bmp085Calibration()
 {
 	ac1 = bmp085ReadInt(0xAA);
 	ac2 = bmp085ReadInt(0xAC);
@@ -57,7 +58,7 @@ void bmp085Calibration()
 }
 
 // Read 1 byte from the BMP085 at 'address'
-char bmp085Read(unsigned char address)
+char SensorBmp85::bmp085Read(unsigned char address)
 {
   unsigned char data;
   
@@ -75,7 +76,7 @@ char bmp085Read(unsigned char address)
 // Read 2 bytes from the BMP085
 // First byte will be from 'address'
 // Second byte will be from 'address'+1
-int bmp085ReadInt(unsigned char address)
+int SensorBmp85::bmp085ReadInt(unsigned char address)
 {
   unsigned char msb, lsb;
   
@@ -93,7 +94,7 @@ int bmp085ReadInt(unsigned char address)
 }
 
 // Read the uncompensated temperature value
-unsigned int bmp085ReadUT()
+unsigned int SensorBmp85::bmp085ReadUT()
 {
   unsigned int ut;
   
@@ -114,7 +115,7 @@ unsigned int bmp085ReadUT()
 
 // Calculate temperature given ut.
 // Value returned will be in units of 0.1 deg C
-short bmp085GetTemperature(unsigned int ut)
+short SensorBmp85::bmp085GetTemperature(unsigned int ut)
 {
   long x1, x2;
   
@@ -129,7 +130,7 @@ short bmp085GetTemperature(unsigned int ut)
 // calibration values must be known
 // b5 is also required so bmp085GetTemperature(...) must be called first.
 // Value returned will be pressure in units of Pa.
-long bmp085GetPressure(unsigned long up)
+long SensorBmp85::bmp085GetPressure(unsigned long up)
 {
   long x1, x2, x3, b3, b6, p;
   unsigned long b4, b7;

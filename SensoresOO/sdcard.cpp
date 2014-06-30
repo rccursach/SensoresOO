@@ -12,10 +12,14 @@
 */
 
 #include "sdcard.h"
+#include <SdFat.h>
+
 
 Sdcard::Sdcard(int sdPin, char* fileName) {
-	sdPin = 8;
-  dataFileName = fileName;
+	this->sdPin = 8;
+  this->dataFileName = fileName;
+  this->sd = SdFat();
+  this->dataFile = SdFile();
 }
 
 Sdcard::~Sdcard() {
@@ -32,16 +36,16 @@ boolean Sdcard::startSDCard() {
   Serial.print("Initializing SD card...");
   // make sure that the default chip select pin is set to
   // output, even if you don't use it:
-  pinMode(sdPin, OUTPUT);
+  pinMode(this->sdPin, OUTPUT);
 
   // see if the card is present and can be initialized:
-  if (!sd.begin(sdPin, SPI_HALF_SPEED)) {
-    sd.initErrorHalt();
+  if (!sd.begin(this->sdPin, SPI_HALF_SPEED)) {
+    this->sd.initErrorHalt();
     Serial.println("Card failed, or not present.");
     result = false;
   } 
   else {
-    if(!dataFile.open(dataFileName, logFileName, O_RDWR | O_CREAT | O_AT_END)){
+    if(!this->dataFile.open(this->dataFileName, O_RDWR | O_CREAT | O_AT_END)){
       sd.initErrorHalt();
       Serial.println("File cannot be opened.");
       result = false;
