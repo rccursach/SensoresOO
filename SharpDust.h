@@ -21,18 +21,22 @@
 * 
 */
 
+#ifndef SHARP_H
+#define SHARP_H
+
+//Include Sensors Interface
 #include "sensors.h"
-#include <SPI.h>
+
 #include <stdlib.h>
 
 class SharpDust : public Sensors {
 public:
-  	//by contract with Sensors interface
+    //by contract with Sensors interface
   virtual void begin();
   virtual String read();
   virtual int getRequiredPins();
   virtual int getReqSerialSpeed();
-  	//own methods
+    //own methods
   SharpDust(int, int);
   ~SharpDust();
 private:
@@ -45,3 +49,5 @@ private:
   char s[32];
 
 };
+
+#endif

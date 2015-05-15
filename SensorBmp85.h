@@ -10,22 +10,23 @@
 * 
 */
 
-#ifndef SENSORS_H
 
+#ifndef BMP085_H
+#define BMP085_H
+
+//Include Sensors Interface
 #include "sensors.h"
-
-#endif
 
 #define BMP085_ADDRESS 0x77  // I2C address of BMP085
 
 class SensorBmp85 : public Sensors {
   public:
-  	//by contract with Sensors interface
+    //by contract with Sensors interface
     virtual void begin();
     virtual String read();
     virtual int getRequiredPins();
     virtual int getReqSerialSpeed();
-  	//own methods
+    //own methods
     SensorBmp85();
     ~SensorBmp85();
   private:
@@ -60,3 +61,5 @@ class SensorBmp85 : public Sensors {
     float p0;     // Pressure at sea level (Pa)
     float altitude;
 };
+
+#endif
